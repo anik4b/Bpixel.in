@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B PIXEL - Dynamic Photo & Video Solution</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#FAF8F5',
+                            100: '#F3ECE4',
+                            200: '#E6D7C3',
+                            300: '#D5BEA0',
+                            400: '#C2A37D',
+                            500: '#A6825B',
+                            600: '#8C6643',
+                            700: '#6E4E33',
+                            800: '#4A3423',
+                            900: '#2A1D13',
+                        },
+                        warmBg: '#F7F4EF',
+                        warmCard: '#FFFFFF',
+                        warmDark: '#221F1D',
+                        warmMuted: '#6E6760',
+                        accentGold: '#C59B27',
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #F7F4EF;
+            color: #221F1D;
+        }
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        .image-card-hover {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+        .image-card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-200 selection:text-brand-900">
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-warmBg/90 backdrop-blur-md border-b border-brand-200/50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo / Name -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-full bg-brand-900 text-warmBg flex items-center justify-center font-serif text-xl font-bold tracking-wider group-hover:bg-brand-700 transition-colors">
+                    B
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-heading text-2xl font-bold tracking-wider text-brand-900 leading-none">PIXEL</span>
+                    <span class="text-[10px] tracking-[0.2em] uppercase text-brand-600 font-medium">Studio</span>
+                </div>
+            </a>
+
+            <!-- Desktop Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-warmDark">
+                <a href="#home" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-100 transition-transform">Home</a>
+                <a href="#gallery" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-0 hover:after:scale-x-100 transition-transform">Gallery</a>
+                <a href="#booking" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-0 hover:after:scale-x-100 transition-transform">Booking</a>
+                <a href="#offers" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-0 hover:after:scale-x-100 transition-transform">Offers</a>
+            </nav>
+
+            <!-- Book Now CTA Header Button -->
+            <div class="hidden md:block">
+                <a href="#booking" class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-900 text-warmBg hover:bg-brand-700 transition-all shadow-sm">
+                    Book Session
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-brand-900 hover:bg-brand-100 transition-colors" aria-label="Toggle menu">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-warmBg border-b border-brand-200 px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-brand-900 hover:bg-brand-100">Home</a>
+            <a href="#gallery" class="block px-3 py-2 rounded-md text-base font-medium text-brand-900 hover:bg-brand-100">Gallery</a>
+            <a href="#booking" class="block px-3 py-2 rounded-md text-base font-medium text-brand-900 hover:bg-brand-100">Booking</a>
+            <a href="#offers" class="block px-3 py-2 rounded-md text-base font-medium text-brand-900 hover:bg-brand-100">Offers</a>
+            <div class="pt-2">
+                <a href="#booking" class="block w-full text-center px-4 py-3 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-900 text-warmBg">
+                    Book Session
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main id="home">
+
+        <!-- Hero / Intro Section -->
+        <section class="relative pt-12 pb-20 md:pt-16 md:pb-28 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Hero Heading & Description -->
+                <div class="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+                    <span class="inline-block text-xs font-semibold uppercase tracking-[0.25em] text-brand-600 mb-3 bg-brand-100/70 px-4 py-1.5 rounded-full border border-brand-200">
+                        Visual Storytelling
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-brand-900 mb-6 leading-[1.15]">
+                        Dynamic Photo &amp; Video Solution.
+                    </h1>
+                    <p class="text-lg sm:text-xl text-warmMuted font-normal leading-relaxed max-w-2xl mx-auto">
+                        We provide all kind of photo, video and editing solution. Our expert team always ready to uplift your desire.
+                    </p>
+                    
+                    <div class="mt-8 flex flex-wrap justify-center gap-4">
+                        <a href="#booking" class="px-7 py-3.5 rounded-full text-sm font-semibold tracking-wider uppercase bg-brand-900 text-warmBg hover:bg-brand-800 transition-all shadow-md hover:shadow-lg flex items-center gap-2">
+                            <span>Get Started</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#gallery" class="px-7 py-3.5 rounded-full text-sm font-semibold tracking-wider uppercase bg-transparent text-brand-900 border border-brand-400 hover:bg-brand-100 transition-all">
+                            View Portfolio
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Warm Aesthetic Image Gallery Layout (Matching PDF Photos) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 items-center">
+                    
+                    <!-- Image 1: Passionfruit / Aesthetic Glass -->
+                    <div class="lg:col-span-2 rounded-2xl overflow-hidden shadow-sm image-card-hover group bg-brand-100 relative h-72 lg:h-80">
+                        <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80" 
+                             alt="Passionfruit and vintage glass" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4 text-white font-serif text-lg">Aesthetic Details</div>
+                    </div>
+
+                    <!-- Image 2: Peaches, Grapes & Wine -->
+                    <div class="lg:col-span-1 rounded-2xl overflow-hidden shadow-sm image-card-hover group bg-brand-100 relative h-72 lg:h-80">
+                        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=600&q=80" 
+                             alt="Peaches and grapes with wine glass" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4 text-white font-serif text-lg">Warm Tones</div>
+                    </div>
+
+                    <!-- Image 3: Vintage Glassware & Fruits in Net Bag -->
+                    <div class="lg:col-span-1 rounded-2xl overflow-hidden shadow-sm image-card-hover group bg-brand-100 relative h-72 lg:h-80">
+                        <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=600&q=80" 
+                             alt="Fruits in mesh bag with vintage bottle" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4 text-white font-serif text-lg">Still Life</div>
+                    </div>
+
+                    <!-- Image 4: Camera & Fresh Peaches / Bag -->
+                    <div class="lg:col-span-2 rounded-2xl overflow-hidden shadow-sm image-card-hover group bg-brand-100 relative h-72 lg:h-80">
+                        <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80" 
+                             alt="Vintage camera with woven bag and peaches" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                        <div class="absolute bottom-4 left-4 text-white font-serif text-lg">Creative Direction</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Capture Section -->
+        <section class="py-20 bg-warmCard border-y border-brand-200/60">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-600 block mb-2">Moments &amp; Memories</span>
+                        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900">Event Capture</h2>
+                    </div>
+                    <p class="text-warmMuted max-w-md mt-4 md:mt-0 text-sm sm:text-base">
+                        Capturing life's most priceless milestones with cinematic warmth and timeless elegance.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Card 1: Wedding -->
+                    <div class="bg-warmBg rounded-2xl p-8 border border-brand-200/70 hover:border-brand-400 transition-all duration-300 group flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 mb-6 group-hover:bg-brand-900 group-hover:text-warmBg transition-colors">
+                                <i data-lucide="heart" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-brand-900 mb-3">Wedding</h3>
+                            <p class="text-warmMuted text-sm sm:text-base leading-relaxed">
+                                Best Quality wedding videos and photos for your happy marriage life.
+                            </p>
+                        </div>
+                        <div class="mt-8 pt-4 border-t border-brand-200/50 flex items-center text-xs font-semibold uppercase tracking-wider text-brand-700 group-hover:text-brand-900">
+                            <span>Explore Package</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Birthday -->
+                    <div class="bg-warmBg rounded-2xl p-8 border border-brand-200/70 hover:border-brand-400 transition-all duration-300 group flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 mb-6 group-hover:bg-brand-900 group-hover:text-warmBg transition-colors">
+                                <i data-lucide="cake" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-brand-900 mb-3">Birthday</h3>
+                            <p class="text-warmMuted text-sm sm:text-base leading-relaxed">
+                                Birthday is a memorial day of life that remind you every year of Happiness.
+                            </p>
+                        </div>
+                        <div class="mt-8 pt-4 border-t border-brand-200/50 flex items-center text-xs font-semibold uppercase tracking-wider text-brand-700 group-hover:text-brand-900">
+                            <span>Explore Package</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Annaprasan -->
+                    <div class="bg-warmBg rounded-2xl p-8 border border-brand-200/70 hover:border-brand-400 transition-all duration-300 group flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-full bg-brand-100 flex items-center justify-center text-brand-700 mb-6 group-hover:bg-brand-900 group-hover:text-warmBg transition-colors">
+                                <i data-lucide="baby" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-brand-900 mb-3">Annaprasan</h3>
+                            <p class="text-warmMuted text-sm sm:text-base leading-relaxed">
+                                Your child is special for your life. This event comes once. So don't lose to capture.
+                            </p>
+                        </div>
+                        <div class="mt-8 pt-4 border-t border-brand-200/50 flex items-center text-xs font-semibold uppercase tracking-wider text-brand-700 group-hover:text-brand-900">
+                            <span>Explore Package</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Photography Section -->
+        <section id="gallery" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-600 block mb-2">Professional Shoots</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900">Model Photography</h2>
+                    <p class="text-warmMuted mt-3 text-sm sm:text-base">
+                        Tailored artistic directions designed to showcase beauty, persona, and unique character.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    
+                    <!-- Portrait -->
+                    <div class="bg-warmCard rounded-2xl overflow-hidden border border-brand-200/70 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="h-56 bg-brand-100 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="Portrait Photography" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-brand-900 mb-2">Portrait</h3>
+                            <p class="text-warmMuted text-sm leading-relaxed">
+                                Body text for whatever you'd like to expand on the main point. High lighting, shadow play, and expressive emotion.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Group -->
+                    <div class="bg-warmCard rounded-2xl overflow-hidden border border-brand-200/70 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="h-56 bg-brand-100 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=600&q=80" alt="Group Photography" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-brand-900 mb-2">Group</h3>
+                            <p class="text-warmMuted text-sm leading-relaxed">
+                                Body text for whatever you'd like to say. Add main takeaway points, quotes, anecdotes, and vibrant connections.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Travel -->
+                    <div class="bg-warmCard rounded-2xl overflow-hidden border border-brand-200/70 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="h-56 bg-brand-100 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80" alt="Travel Photography" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-brand-900 mb-2">Travel</h3>
+                            <p class="text-warmMuted text-sm leading-relaxed">
+                                Body text for whatever you'd like to add more to the main point. It provides details, explanations, and context.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Landscape -->
+                    <div class="bg-warmCard rounded-2xl overflow-hidden border border-brand-200/70 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="h-56 bg-brand-100 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80" alt="Landscape Photography" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-brand-900 mb-2">Landscape</h3>
+                            <p class="text-warmMuted text-sm leading-relaxed">
+                                Body text for whatever you'd like to add more to the main point, explanations, natural perspectives, and context.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Special Service Section -->
+        <section class="py-20 bg-brand-900 text-warmBg relative overflow-hidden">
+            <div class="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-brand-800/40 blur-3xl pointer-events-none"></div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-300 block mb-2">Post Production</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-warmBg">Special Service</h2>
+                    <p class="text-brand-200/80 mt-3 text-sm sm:text-base">
+                        Refining raw footage into mesmerizing cinematic visual and acoustic art.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    
+                    <!-- Video Editing -->
+                    <div class="bg-brand-800/60 backdrop-blur-sm border border-brand-700/60 rounded-2xl p-8 hover:border-brand-500 transition-colors">
+                        <div class="w-12 h-12 rounded-xl bg-brand-700/80 flex items-center justify-center text-brand-200 mb-6">
+                            <i data-lucide="video" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-warmBg mb-3">Video Editing</h3>
+                        <p class="text-brand-200/70 text-sm sm:text-base leading-relaxed">
+                            Body text for whatever you'd like to add more to the subheading. Professional color grading, seamless transitions, and narrative rhythm.
+                        </p>
+                    </div>
+
+                    <!-- Audio Editing -->
+                    <div class="bg-brand-800/60 backdrop-blur-sm border border-brand-700/60 rounded-2xl p-8 hover:border-brand-500 transition-colors">
+                        <div class="w-12 h-12 rounded-xl bg-brand-700/80 flex items-center justify-center text-brand-200 mb-6">
+                            <i data-lucide="mic" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-warmBg mb-3">Audio Editing</h3>
+                        <p class="text-brand-200/70 text-sm sm:text-base leading-relaxed">
+                            Body text for whatever you'd like to expand on the main point. Sound cleaning, voice enhancement, and immersive acoustic mixing.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Happy Clients / Testimonials Section -->
+        <section class="py-20 bg-warmCard">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <span class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-600 block mb-2">Testimonials</span>
+                    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-brand-900">Happy Clients</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Review 1 -->
+                    <div class="bg-warmBg p-8 rounded-2xl border border-brand-200/80 flex flex-col justify-between shadow-sm">
+                        <div>
+                            <div class="text-accentGold flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                            <blockquote class="font-serif text-2xl font-semibold italic text-brand-900 mb-4">
+                                "A terrific piece of praise"
+                            </blockquote>
+                            <p class="text-warmMuted text-sm leading-relaxed mb-6">
+                                The photos captured the mood perfectly. The team was extremely polite and worked around our schedule effortlessly.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-200/60">
+                            <h4 class="font-bold text-brand-900 text-base">Name</h4>
+                            <p class="text-xs text-warmMuted">Description / Event Client</p>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="bg-warmBg p-8 rounded-2xl border border-brand-200/80 flex flex-col justify-between shadow-sm">
+                        <div>
+                            <div class="text-accentGold flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                            <blockquote class="font-serif text-2xl font-semibold italic text-brand-900 mb-4">
+                                "A fantastic bit of feedback"
+                            </blockquote>
+                            <p class="text-warmMuted text-sm leading-relaxed mb-6">
+                                Exceeded all expectations for our portrait shoot. The final color tones were so rich and aesthetic!
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-200/60">
+                            <h4 class="font-bold text-brand-900 text-base">Name</h4>
+                            <p class="text-xs text-warmMuted">Description / Model Shoot</p>
+                        </div>
+                    </div>
+
+                    <!-- Review 3 -->
+                    <div class="bg-warmBg p-8 rounded-2xl border border-brand-200/80 flex flex-col justify-between shadow-sm">
+                        <div>
+                            <div class="text-accentGold flex gap-1 mb-4">
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                            </div>
+                            <blockquote class="font-serif text-2xl font-semibold italic text-brand-900 mb-4">
+                                "A genuinely glowing review"
+                            </blockquote>
+                            <p class="text-warmMuted text-sm leading-relaxed mb-6">
+                                Video editing turned our raw video into a cinematic masterpiece. Truly high standard quality!
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-200/60">
+                            <h4 class="font-bold text-brand-900 text-base">Name</h4>
+                            <p class="text-xs text-warmMuted">Description / Video Editing</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact / Call to Action Bar -->
+        <section id="booking" class="py-12 bg-brand-200/40 border-y border-brand-300/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                    <div>
+                        <h3 class="text-2xl sm:text-3xl font-bold text-brand-900 mb-2">Ready to Capture Your Story?</h3>
+                        <p class="text-warmMuted text-sm sm:text-base">Get in touch with us to discuss your upcoming project or event booking.</p>
+                    </div>
+
+                    <!-- Quick Contact Badges -->
+                    <div class="flex flex-wrap items-center gap-4">
+                        <a href="tel:+917908018440" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-warmCard text-brand-900 border border-brand-300 font-semibold text-sm hover:bg-brand-900 hover:text-warmBg transition-all shadow-sm">
+                            <i data-lucide="phone-call" class="w-5 h-5 text-brand-600 group-hover:text-warmBg"></i>
+                            <span>Call +91 7908018440</span>
+                        </a>
+
+                        <a href="mailto:contact@bpixel.in" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-warmCard text-brand-900 border border-brand-300 font-semibold text-sm hover:bg-brand-900 hover:text-warmBg transition-all shadow-sm">
+                            <i data-lucide="mail" class="w-5 h-5 text-brand-600"></i>
+                            <span>Mail - contact@bpixel.in</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="offers" class="bg-brand-900 text-warmBg pt-16 pb-12 border-t border-brand-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 pb-12 border-b border-brand-800">
+                
+                <!-- Brand Info Column -->
+                <div class="md:col-span-5">
+                    <a href="#" class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-full bg-warmBg text-brand-900 flex items-center justify-center font-serif text-xl font-bold">
+                            B
+                        </div>
+                        <span class="font-heading text-2xl font-bold tracking-wider text-warmBg">B PIXEL</span>
+                    </a>
+                    <p class="text-brand-200/70 text-sm max-w-sm mb-6 leading-relaxed">
+                        Dynamic Photo &amp; Video Solution. Preserving your irreplaceable moments with artistic distinction.
+                    </p>
+                    <div class="flex items-center gap-4 text-brand-300">
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-800 flex items-center justify-center hover:bg-brand-700 hover:text-white transition-colors" aria-label="Instagram">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-800 flex items-center justify-center hover:bg-brand-700 hover:text-white transition-colors" aria-label="Facebook">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-800 flex items-center justify-center hover:bg-brand-700 hover:text-white transition-colors" aria-label="Youtube">
+                            <i data-lucide="youtube" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Page Links Column -->
+                <div class="md:col-span-3">
+                    <h4 class="font-serif text-xl font-bold text-warmBg mb-4 tracking-wide">Page Links</h4>
+                    <ul class="space-y-2.5 text-sm text-brand-200/80">
+                        <li><a href="#about" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#gallery" class="hover:text-white transition-colors">Gallery</a></li>
+                        <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#booking" class="hover:text-white transition-colors">Booking</a></li>
+                        <li><a href="#offers" class="hover:text-white transition-colors">Offers</a></li>
+                        <li><a href="#feedback" class="hover:text-white transition-colors">Feedback</a></li>
+                    </ul>
+                </div>
+
+                <!-- Policies Column -->
+                <div class="md:col-span-4">
+                    <h4 class="font-serif text-xl font-bold text-warmBg mb-4 tracking-wide">Policies</h4>
+                    <ul class="space-y-2.5 text-sm text-brand-200/80">
+                        <li><a href="#refund" class="hover:text-white transition-colors">Refund Policy</a></li>
+                        <li><a href="#privacy" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#terms" class="hover:text-white transition-colors">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-200/50 gap-4">
+                <p>&copy; <span id="year"></span> B PIXEL. All rights reserved.</p>
+                <p>Crafted for dynamic visual storytelling.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Set Current Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on clicking links
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
