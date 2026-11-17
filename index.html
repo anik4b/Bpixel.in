@@ -45,10 +45,8 @@
                 }
             }
         }
-	
-        
 
-	// Prevent theme flashing on load & determine system color if no saved preference
+        // Prevent theme flashing on load & determine system color if no saved preference
         (function() {
             const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const savedTheme = localStorage.getItem('theme') || (systemDark ? 'dark' : 'light');
@@ -71,7 +69,7 @@
                     });
             });
         }
-	</script>
+    </script>
 
     <style>
         /* CSS Variables for Dynamic Light/Dark Theme Support */
@@ -127,7 +125,13 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
+		
+		/* Footer Action Area for OK Button */
+		.modal-footer {
+			margin-top: 10px;
+			text-align: center;
+		}
+		
         .modal-content {
             background-color: var(--card-bg);
             color: var(--text-color);
@@ -157,6 +161,23 @@
         .close-btn:hover {
             color: #FF0000;
         }
+		
+		/* OK Button Style */
+			.ok-btn {
+			background-color: #0066cc;
+			color: #ffffff;
+			border: none;
+			padding: 8px 16px;
+			font-size: 15px;
+			font-weight: bold;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.2s;
+		}
+			.ok-btn:hover {
+			background-color: #228B22;
+			color: #000000;
+		}
 
         .modal-overlay.active {
             display: flex;
@@ -170,6 +191,33 @@
         .theme-toggle-container[data-theme="dark"] .sliding-pill {
             transform: translateX(100%);
         }
+
+        /* Glowing Border Animation Styles */
+        @keyframes glowing-border {
+            0% {
+                box-shadow: 0 0 5px rgba(197, 155, 39, 0.3), inset 0 0 5px rgba(197, 155, 39, 0.1);
+                border-color: rgba(197, 155, 39, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(197, 155, 39, 0.8), inset 0 0 10px rgba(197, 155, 39, 0.4);
+                border-color: rgba(197, 155, 39, 1);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(197, 155, 39, 0.3), inset 0 0 5px rgba(197, 155, 39, 0.1);
+                border-color: rgba(197, 155, 39, 0.5);
+            }
+        }
+
+        .glowing-cta {
+            position: relative;
+            border: 2px solid #C59B27;
+            animation: glowing-border 3s infinite ease-in-out;
+        }
+
+        .glowing-cta:hover {
+            animation: none;
+            box-shadow: 0 0 25px rgba(197, 155, 39, 1);
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-200 selection:text-brand-900">
@@ -178,29 +226,21 @@
     <header class="sticky top-0 z-50 backdrop-blur-md border-b transition-all duration-300" style="background-color: var(--header-bg); border-color: var(--border-color);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- Brand Logo / Name -->
-            <a href="#" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 flex items-center justify-center font-serif text-xl font-bold tracking-wider">
-                    <img src="images/logo.png" alt="B" class="w-full h-full object-contain">
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-heading text-2xl font-bold tracking-wider leading-none">PIXEL</span>
-                    <span class="text-[10px] tracking-[.6em] uppercase text-brand-500 font-medium">Studio</span>
-                </div>
-            </a>
+            <!-- Left Group: Brand Logo + Toggle Switch Anchored Together -->
+            <div class="flex items-center gap-6">
+                <!-- Brand Logo / Name -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 flex items-center justify-center font-serif text-xl font-bold tracking-wider">
+                        <img src="images/logo.png" alt="B" class="w-full h-full object-contain">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-heading text-2xl font-bold tracking-wider leading-none">PIXEL</span>
+                        <span class="text-[10px] tracking-[.6em] uppercase text-brand-500 font-medium">Studio</span>
+                    </div>
+                </a>
 
-            <!-- Desktop Links -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-warmDark">
-                <a href="#home" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-100 transition-transform">Home</a>
-                <a href="#gallery" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-0 hover:after:scale-x-100 transition-transform">Gallery</a>
-                <a href="#review" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-0 hover:after:scale-x-100 transition-transform">Review</a>
-                <a href="#offers" class="hover:text-brand-600 transition-colors py-1 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-600 after:scale-x-0 hover:after:scale-x-100 transition-transform">Offers</a>
-            </nav>
-
-            <!-- Theme Toggle Switch & Book Now CTA -->
-            <div class="hidden md:flex items-center gap-4">
-                <!-- Desktop 2-Way Sliding Pill Toggle Switch (Icons Only) -->
-                <div class="theme-toggle-container relative flex items-center bg-brand-100 dark:bg-zinc-800 p-1 rounded-full border border-brand-200 dark:border-zinc-700 w-20 h-9 cursor-pointer shadow-inner">
+                <!-- Desktop 2-Way Sliding Pill Toggle Switch (Anchored to Left/Logo group) -->
+                <div class="hidden sm:flex theme-toggle-container relative items-center bg-brand-100 dark:bg-zinc-800 p-1 rounded-full border border-brand-200 dark:border-zinc-700 w-20 h-9 cursor-pointer shadow-inner">
                     <div class="sliding-pill absolute w-7 h-7 bg-white dark:bg-zinc-900 rounded-full shadow-md transition-transform duration-300 ease-in-out left-1"></div>
                     <button type="button" data-theme="light" class="relative z-10 flex-1 flex items-center justify-center h-full text-warmMuted dark:text-zinc-400 hover:text-brand-900 dark:hover:text-white transition-colors" aria-label="Light mode">
                         <i data-lucide="sun" class="w-4 h-4"></i>
@@ -209,16 +249,40 @@
                         <i data-lucide="moon" class="w-4 h-4"></i>
                     </button>
                 </div>
+            </div>
 
-                <a href="#booking" class="inline-flex items-center justify-center px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-900 text-warmBg dark:bg-brand-100 dark:text-brand-900 hover:opacity-90 transition-all shadow-sm">
+            <!-- Center Navigation Links with Smooth Hover Underline Effect -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide">
+                <a href="#home" class="nav-link hover:text-brand-500 dark:hover:text-brand-300 transition-colors py-1">Home</a>
+                <a href="#gallery" class="nav-link hover:text-brand-500 dark:hover:text-brand-300 transition-colors py-1">Gallery</a>
+                <a href="#review" class="nav-link hover:text-brand-500 dark:hover:text-brand-300 transition-colors py-1">Review</a>
+                <a href="#offers" class="nav-link hover:text-brand-500 dark:hover:text-brand-300 transition-colors py-1">Offers</a>
+            </nav>
+
+            <!-- Right Group: Book Now Glowing CTA -->
+            <div class="hidden md:flex items-center">
+                <a href="#booking" class="glowing-cta inline-flex items-center justify-center px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-900 text-warmBg dark:bg-brand-100 dark:text-brand-900 transition-all">
                     Book Session
                 </a>
             </div>
 
             <!-- Mobile Menu Toggle -->
-            <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-brand-100 dark:hover:bg-zinc-800 transition-colors" aria-label="Toggle menu">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+            <div class="flex items-center gap-3 md:hidden">
+                <!-- Mobile Toggle Switch in Header -->
+                <div class="flex sm:hidden theme-toggle-container relative items-center bg-brand-100 dark:bg-zinc-800 p-1 rounded-full border border-brand-200 dark:border-zinc-700 w-16 h-8 cursor-pointer shadow-inner">
+                    <div class="sliding-pill absolute w-6 h-6 bg-white dark:bg-zinc-900 rounded-full shadow-md transition-transform duration-300 ease-in-out left-1"></div>
+                    <button type="button" data-theme="light" class="relative z-10 flex-1 flex items-center justify-center h-full text-warmMuted dark:text-zinc-400" aria-label="Light mode">
+                        <i data-lucide="sun" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button type="button" data-theme="dark" class="relative z-10 flex-1 flex items-center justify-center h-full text-warmMuted dark:text-zinc-400" aria-label="Dark mode">
+                        <i data-lucide="moon" class="w-3.5 h-3.5"></i>
+                    </button>
+                </div>
+
+                <button id="mobileMenuBtn" class="p-2 rounded-lg hover:bg-brand-100 dark:hover:bg-zinc-800 transition-colors" aria-label="Toggle menu">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
         </div>
 
         <!-- Mobile Navigation Menu -->
@@ -229,24 +293,12 @@
             <a href="#offers" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-brand-100 dark:hover:bg-zinc-800">Offers</a>
             
             <div class="pt-2 flex flex-col gap-3">
-                <!-- Mobile 2-Way Sliding Pill Toggle Switch (Icons Only) -->
-                <div class="theme-toggle-container relative flex items-center bg-brand-100 dark:bg-zinc-800 p-1 rounded-full border border-brand-200 dark:border-zinc-700 w-full h-11 cursor-pointer shadow-inner">
-                    <div class="sliding-pill absolute w-[calc(50%-4px)] h-9 bg-white dark:bg-zinc-900 rounded-full shadow-md transition-transform duration-300 ease-in-out left-1"></div>
-                    <button type="button" data-theme="light" class="relative z-10 flex-1 flex items-center justify-center h-full text-warmMuted dark:text-zinc-400 hover:text-brand-900 dark:hover:text-white transition-colors gap-2" aria-label="Light mode">
-                        <i data-lucide="sun" class="w-4 h-4"></i> <span class="text-xs font-semibold uppercase">Light</span>
-                    </button>
-                    <button type="button" data-theme="dark" class="relative z-10 flex-1 flex items-center justify-center h-full text-warmMuted dark:text-zinc-400 hover:text-brand-900 dark:hover:text-white transition-colors gap-2" aria-label="Dark mode">
-                        <i data-lucide="moon" class="w-4 h-4"></i> <span class="text-xs font-semibold uppercase">Dark</span>
-                    </button>
-                </div>
-
-                <a href="#booking" class="block w-full text-center px-4 py-3 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-900 text-warmBg dark:bg-brand-100 dark:text-brand-900">
+                <a href="#booking" class="glowing-cta block w-full text-center px-4 py-3 rounded-full text-xs font-semibold tracking-wider uppercase bg-brand-900 text-warmBg dark:bg-brand-100 dark:text-brand-900">
                     Book Session
                 </a>
             </div>
         </div>
     </header>
-
 
     <!-- Main Content Container -->
     <main id="home">
@@ -595,7 +647,7 @@
                 <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
                     <div>
                         <h3 class="text-2xl sm:text-3xl font-bold text-brand-900 mb-2">Ready to Capture Your Story ?</h3>
-                        <p class="text-warmMuted text-sm sm:text-base">Get in touch with us to discuss your upcoming project or event booking. Starting with 499 Rupees only.</p>
+                        <p class="text-warmMuted text-sm sm:text-base">Get in touch with us to discuss your upcoming project or event booking. Starting with ₹ 499 Rupees only.</p>
                     </div>
 
                     <!-- Quick Contact Badges -->
@@ -605,9 +657,9 @@
                             <span>Call Me +917908018440</span>
                         </a>
 
-                        <a href="mailto:contact@bpixel.in" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-warmCard text-brand-900 border border-brand-300 font-semibold text-sm hover:bg-brand-900 hover:text-warmBg transition-all shadow-sm">
+                        <a href="mailto:bpixelzone@gmail.com" class="inline-flex items-center gap-3 px-6 py-3.5 rounded-xl bg-warmCard text-brand-900 border border-brand-300 font-semibold text-sm hover:bg-brand-900 hover:text-warmBg transition-all shadow-sm">
                             <i data-lucide="mail" class="w-5 h-5 text-brand-600"></i>
-                            <span>Mail - contact@bpixel.in</span>
+                            <span>Mail - bpixelzone@gmail.com</span>
                         </a>
                     </div>
                 </div>
@@ -707,8 +759,9 @@
       <button class="close-btn">&times;</button>
       <h2 style="text-align: center;font-weight: bold;text-decoration: underline; color:#45B088;font-size: 26px;">Help & Support</h2>
       <p>Need assistance? We are here to help you navigate our services.</p>
-      <p>• <strong>FAQs:</strong> Check our common questions section for quick fixes.</p>
-      <p>• <strong>Contact Support:</strong> Email us at support@example.com for 24/7 assistance.</p>
+      <p>1. <strong>Payment Method:</strong> We accept all major credit/debit cards, UPI, and net banking options.</p>
+	  <p>2. <strong>Cancellation Policy:</strong> Cancallation can be made by both party with proper reasone. Refunds are processed within 5–7 business days.</p>
+      <p>3. <strong>Contact Support:</strong> Email us at "bpixelcontact@gmail.com" for 24/7 assistance.</p>
       <div class="modal-footer">
         <button class="ok-btn">OK</button>
       </div>
@@ -720,9 +773,27 @@
     <div class="modal-content">
       <button class="close-btn">&times;</button>
       <h2 style="text-align: center;font-weight: bold;text-decoration: underline; color:#45B088;font-size: 26px;">Terms & Conditions</h2>
-      <p>By using our services, you agree to comply with the following rules and guidelines:</p>
-      <p>1. <strong>User Conduct:</strong> You agree not to misuse our services or bypass site security.</p>
-      <p>2. <strong>Accountability:</strong> Users are responsible for keeping their login credentials secure.</p>
+      <p>By using our services, you agree to comply with the following rules and guidelines.These Terms and Conditions shall be governed by and construed in accordance with the laws of India:</p><br>
+      <p>1. <strong>User Conduct:</strong> You agree not to misuse our services.</p>
+      <p>2. <strong>Booking Confirmation:</strong> A session is officially booked only when you receive written or electronic confirmation from our side with unique contract ID.</p>
+      <p>3. <strong>Session Timeliness:</strong> Please be prepare on time for your scheduled session. Late start may result in a shortened shooting time, and we cannot guarantee that lost time will be made up due to subsequent appointments.</p>
+      <p>4. <strong>Deposits:</strong> A non-refundable deposit of 50% is required at the time of booking to reserve your date and time slot.</p>
+      <p>5. <strong>Remaining Balance:</strong> The remaining balance or 80% of contract have to pay on the day of the shoot.</p>
+      <p>6. <strong>Additional Costs:</strong> Extra edits, high-resolution file additions, physical prints, albums, or extended studio hours will be billed separately.</p>
+      <p>7. <strong>Client Cancellation:</strong> If you choose to cancel your booking, your deposit may be applied toward a future reschedulement at our discretion. Cancellations made as per cancellation policys.</p>
+      <p>8. <strong>Rescheduling:</strong> We allow reschedule if requested at least 48 hours prior to the session, subject to studio availability.</p>
+      <p>9. <strong>Force Majeure / Studio Cancellation:</strong> If we has to cancel due to illness, emergency, equipment failure, or unforeseen circumstances, we will reschedule your session at no extra charge or issue a full refund of payments made.</p>
+      <p>10. <strong>Client Cooperation:</strong> You agree to cooperate with the photographer's instructions, styling guidance, and pacing. For family or child shoots, parents/guardians are responsible for the supervision and behavior of children at all times.</p>
+      <p>11. <strong>Equipment Safety:</strong> You agree to treat studio equipment, props, and facility spaces with care. Any damage caused to studio property by you, your family, or your guests will be charged to you at replacement/repair cost..</p>
+      <p>12. <strong>Liability Waiver:</strong> We are not responsible for you/ your personal injury, loss, or damage to personal property.</p>
+      <p>13. <strong>Editing Style:</strong> All delivered images will be professionally post-processed for exposure, color balance, contrast, and standard retouching in the signature style of B-Pixel Studio. Requests for heavy custom retouching or specific alternate editing styles may incur extra charges.</p>
+      <p>14. <strong>Delivery Timeline:</strong> Proofs or final edited galleries will be delivered within 30 days after the shoot date, unless otherwise specified in your package contract.</p>
+      <p>15. <strong>Archiving:</strong> We store final delivered digital files for up to 90 days post-delivery.</p>
+      <p>16. <strong>Copyright Ownership:</strong> In accordance with copyright law, Studio have full copyright of all images, RAW files, proofs, and outtakes created during the session. Except face and personal details.</p>
+      <p>17. <strong>Personal Use License:</strong> You absuletely your use content whenever you post.</p>
+      <p>18. <strong>Restrictions:</strong> In accordance with copyright law, If you choose copyright music on your Video and repost on social media. You may get copyright strick or claim. It will be fully your responsbility.</p>
+      <p>19. <strong>Model Release & Portfolio Usage:</strong> The right to use selected images for portfolio display, social media promotion, website showcases, and marketing materials depend on your concern.</p>
+      <p>20. <strong>Technical Failures:</strong> In the unlikely event of a technical failure, camera malfunction, memory card corruption, or loss of images before delivery, liability is strictly limited.</p>
       <div class="modal-footer">
         <button class="ok-btn">OK</button>
       </div>
@@ -735,8 +806,9 @@
       <button class="close-btn">&times;</button>
       <h2 style="text-align: center;font-weight: bold;text-decoration: underline; color:#45B088;font-size: 26px;">Refund Policy</h2>
       <p>We want you to be completely satisfied with your purchase.</p>
-      <p>1. <strong>Eligibility:</strong> Refund requests must be submitted within 30 days of purchase.</p>
-      <p>2. <strong>Processing:</strong> Approved refunds will be credited back to your original payment method within 5–7 business days.</p>
+      <p>1. <strong>Eligibility:</strong> Full payment client only can get refund of 50%.</p>
+      <p>2. <strong>Ineligibility:</strong> Advance payment less or equal to 50% is not refundable.</p>
+      <p>3. <strong>Processing:</strong> Approved refunds will be credited back to your original payment method within 5–7 business days.</p>
       <div class="modal-footer">
         <button class="ok-btn">OK</button>
       </div>
